@@ -9,7 +9,7 @@ public class Estudiante extends Usuario {
 
     @Override
     public String toString() {
-        return super.toString() + "\nMatricula: " + getMatricula() + "\nNumero de ejemplares: " + getNumeroDeEjemplares();
+        return super.toString() + "\nMatricula: " + getMatricula();
     }
 
     public int getNumeroDeEjemplares() {
@@ -20,7 +20,7 @@ public class Estudiante extends Usuario {
         this.numeroDeEjemplares = numeroDeEjemplares;
     }
 
-    public Estudiante(String nombre, String direccion, short telefono, String matricula) {
+    public Estudiante(String nombre, String direccion, Long telefono, String matricula) {
         super(nombre, direccion, telefono);
         this.matricula = matricula;
     }

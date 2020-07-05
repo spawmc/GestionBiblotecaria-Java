@@ -12,6 +12,11 @@ public class Profesor extends Usuario {
         this.numeroDePersonal = numeroDePersonal;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nNumero de personal: " + getNumeroDePersonal();
+    }
+
     public int getNumeroDeEjemplares() {
         return numeroDeEjemplares;
     }

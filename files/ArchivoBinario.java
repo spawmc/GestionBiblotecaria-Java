@@ -126,7 +126,7 @@ public class ArchivoBinario implements ISave, IRead {
         ArrayList<Tesis> tesis = new ArrayList<Tesis>();
 
         try {
-            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(LIBROS));
+            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(TESIS));
             tesis = (ArrayList<Tesis>) lectura.readObject();
             lectura.close();
         } catch (IOException e) {
@@ -146,7 +146,7 @@ public class ArchivoBinario implements ISave, IRead {
         ArrayList<Estudiante> estudiantes = new ArrayList<Estudiante>();
 
         try {
-            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(LIBROS));
+            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(ESTUDIANTES));
             estudiantes = (ArrayList<Estudiante>) lectura.readObject();
             lectura.close();
         } catch (IOException e) {
@@ -166,7 +166,7 @@ public class ArchivoBinario implements ISave, IRead {
         ArrayList<Profesor> profesores = new ArrayList<Profesor>();
 
         try {
-            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(LIBROS));
+            ObjectInputStream lectura = new ObjectInputStream(new FileInputStream(PROFESORES));
             profesores = (ArrayList<Profesor>) lectura.readObject();
             lectura.close();
         } catch (IOException e) {

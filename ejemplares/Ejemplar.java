@@ -89,7 +89,21 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 
 	@Override
 	public String toString() {
-		return "\nTitulo: " + getTitulo() + "\nAño: " + getAño() + "\nClasificacion: " + getClasificacion();
+		String string = "\nTitulo: " + getTitulo() + "\nAño: " + getAño() + "\nClasificacion: " + getClasificacion() + "\nAutor(es): ";
+
+		if(autores.size() == 1){
+			string += autores.get(0).getNombre();
+		}else {
+			for (int i = 0; i < autores.size(); i++) {
+				if(i == 0){
+					string += autores.get(i).getNombre();
+				}else{
+					string += "\t" + autores.get(i).getNombre();
+
+				}
+			}
+		}
+		return string;
 	}
 
 	public String getTitulo() {
