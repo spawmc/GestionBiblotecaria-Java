@@ -12,7 +12,6 @@ import usuarios.Usuario;
  * los prestamos
  * 
  */
-
 public abstract class Ejemplar implements IPrestamo, Serializable {
 	protected String titulo;
 	protected short año;
@@ -22,6 +21,7 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 	protected String clasificacion;
 
 	/**
+	 * Constructor principal
 	 * 
 	 * @param titulo
 	 * @param año
@@ -33,7 +33,8 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 		this.setClasificacion(clasificacion);
 	}
 
-	public Ejemplar(){}
+	public Ejemplar() {
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -67,15 +68,25 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 
 	/**
 	 * {@inheritDoc}
+	 * <p>
+	 * Ademas modifica el tiempo prestado en minutos por si se ha pasado del tiempo,
+	 * deberá pagar
 	 */
 	@Override
 	public void regresar(Date dateI, Date dateF) {
-		long minutos = 0;
-		if (dateI.getTime() > dateF.getTime()) {
-			long milis = (dateF.getTime() - dateI.getTime());
-			minutos = (milis / 1000) / 60;
-		} else {
+		long minutos;
+		if (esPrestado() == true) {
+			System.out.println(dateI.getTime());
+			System.out.println(dateF.getTime());
+			long milis = ((long)(dateF.getTime() - dateI.getTime()));
+			System.out.println(milis);
+			minutos = (long) (milis * 0.0000167F);
+			System.out.println(minutos);
 			setTiempoPrestado(minutos);
+			System.out.println("Entro al if");
+		} else {
+			setTiempoPrestado(0L);
+			System.out.println("No ha sido prestado aun");
 		}
 	}
 
@@ -84,20 +95,23 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 	 */
 	@Override
 	public Date prestar(Date dateI) {
+		setPrestado(true);
+		System.out.println("Prestado");
 		return dateI;
 	}
 
 	@Override
 	public String toString() {
-		String string = "\nTitulo: " + getTitulo() + "\nAño: " + getAño() + "\nClasificacion: " + getClasificacion() + "\nAutor(es): ";
+		String string = "\nTitulo: " + getTitulo() + "\nAño: " + getAño() + "\nClasificacion: " + getClasificacion()
+				+ "\nAutor(es): ";
 
-		if(autores.size() == 1){
+		if (autores.size() == 1) {
 			string += autores.get(0).getNombre();
-		}else {
+		} else {
 			for (int i = 0; i < autores.size(); i++) {
-				if(i == 0){
+				if (i == 0) {
 					string += autores.get(i).getNombre();
-				}else{
+				} else {
 					string += "\t" + autores.get(i).getNombre();
 
 				}

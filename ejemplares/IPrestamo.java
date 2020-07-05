@@ -9,12 +9,13 @@ public interface IPrestamo {
      * 
      * @param dateI Objeto {@code Date} con el que se guarda el momento en el que se
      *              realiza el prestamo
-     * @return retorna la la hora en la que se realizó el prestamo
+     * @return retorna la hora en la que se realizó el prestamo, esto es opcional en
+     *         caso de que se requiera tener la hora guardadad en otro lugar
      */
     Date prestar(Date dateI);
 
     /**
-     * Se encarga
+     * Se encarga de detener el tiempo donde se regresa el libro
      * 
      * @param dateI Objeto {@code Date} con el tiempo de inicio del prestamo
      * @param dateF Objeto {@code Date} con el tiempo final del prestamo (En

@@ -14,6 +14,7 @@ public class Libro extends Ejemplar {
     private String isbn;
     private Area area;
     private Area.SubArea subarea;
+    private int numEjemplares = 0;
 
     /**
      * 
@@ -34,6 +35,15 @@ public class Libro extends Ejemplar {
         this.area = area;
         this.subarea = subarea;
         setAutores(autores);
+        this.numEjemplares = 1;
+    }
+
+    public int getNumEjemplares() {
+        return numEjemplares;
+    }
+
+    public void setNumEjemplares(int numEjemplares) {
+        this.numEjemplares = numEjemplares;
     }
 
     public Libro() {

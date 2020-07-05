@@ -1,7 +1,11 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
 
 import ejemplares.Area;
+import ejemplares.Autor;
+import ejemplares.Libro;
 import ejemplares.Tesis;
 import files.ArchivoBinario;
 import usuarios.Estudiante;
@@ -51,10 +55,35 @@ public class MainPrueba {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		ArrayList<Area> area = new ArrayList<>();
+		area.add(new Area("Ciencias biológicas"));
+		area.add(new Area("Ciencias sociales"));
+		area.add(new Area("Humanidades y de las artes"));
+
+		area.get(0).addSubAreas(makeSubArea());
+
+		ArrayList<Autor> autores = new ArrayList<>();
+		autores.add(new Autor("Arthur Schopenhauer"));
+
+		ArrayList<Libro> libros = new ArrayList<>();
+		libros.add(new Libro("El arte de tener razón", (short) 1600, "De bolsillo", 3, "978-84-206-7410-0", autores,
+				area.get(0), area.get(0).getSubArea(0)));
 
 		for (int i = 0; i < tmpProfesor.size(); i++) {
 			System.out.println(tmpProfesor.get(i));
 		}
+
+		Date dateI = libros.get(0).prestar(new Date());
+/* 		for (int i = 0; i < 1200000; i++) {
+			System.out.println(i);
+		} */
+
+		Scanner sc = new Scanner(System.in);
+		sc.nextLine();
+		sc.close();
+		libros.get(0).regresar(dateI, new Date());
+
+		System.out.println(libros.get(0).getTiempoPrestado());
 
 	}// Final main
 
