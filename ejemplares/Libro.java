@@ -10,81 +10,81 @@ import ejemplares.Area.SubArea;
  * @see Ejemplar
  */
 public class Libro extends Ejemplar {
-    private int edicion;
-    private String isbn;
-    private Area area;
-    private Area.SubArea subarea;
-    private int numEjemplares = 0;
+	private int edicion;
+	private String isbn;
+	private Area area;
+	private Area.SubArea subarea;
+	private int numEjemplares = 0;
 
-    /**
-     * 
-     * @param titulo
-     * @param año
-     * @param clasificacion
-     * @param edicion
-     * @param isbn
-     * @param autores
-     * @param area
-     * @param subarea
-     */
-    public Libro(String titulo, short año, String clasificacion, int edicion, String isbn, ArrayList<Autor> autores,
-            Area area, SubArea subarea) {
-        super(titulo, año, clasificacion);
-        this.edicion = edicion;
-        this.isbn = isbn;
-        this.area = area;
-        this.subarea = subarea;
-        setAutores(autores);
-        this.numEjemplares = 1;
-    }
+	/**
+	 * 
+	 * @param titulo
+	 * @param año
+	 * @param clasificacion
+	 * @param edicion
+	 * @param isbn
+	 * @param autores
+	 * @param area
+	 * @param subarea
+	 */
+	public Libro(String titulo, short año, String clasificacion, int edicion, String isbn, ArrayList<Autor> autores,
+			Area area, SubArea subarea) {
+		super(titulo, año, clasificacion);
+		this.edicion = edicion;
+		this.isbn = isbn;
+		this.area = area;
+		this.subarea = subarea;
+		setAutores(autores);
+		this.numEjemplares = 1;
+	}
 
-    public int getNumEjemplares() {
-        return numEjemplares;
-    }
+	public int getNumEjemplares() {
+		return numEjemplares;
+	}
 
-    public void setNumEjemplares(int numEjemplares) {
-        this.numEjemplares = numEjemplares;
-    }
+	public void setNumEjemplares(int numEjemplares) {
+		this.numEjemplares = numEjemplares;
+	}
 
-    public Libro() {
-    }
+	public Libro() {
+	}
 
-    @Override
-    public String toString() {
-        return super.toString() + "\nEdicion: " + getEdicion() + "\nIsbn: " + getIsbn() + "\nArea: " + getArea()
-                + "\nSub Area: " + getSubarea();
-    }
+	@Override
+	public String toString() {
+		return super.toString() + "\nEdicion: " + getEdicion() + "\nIsbn: " + getIsbn() + "\nArea: " + getArea()
+				+ "\nSub Area: " + getSubarea();
+	}
 
-    public SubArea getSubarea() {
-        return subarea;
-    }
+	public SubArea getSubarea() {
+		return subarea;
+	}
 
-    public void setSubarea(SubArea subarea) {
-        this.subarea = subarea;
-    }
+	public void setSubarea(SubArea subarea) {
+		this.subarea = subarea;
+	}
 
-    public int getEdicion() {
-        return edicion;
-    }
+	public int getEdicion() {
+		return edicion;
+	}
 
-    public String getIsbn() {
-        return isbn;
-    }
+	public String getIsbn() {
+		return isbn;
+	}
 
-    public Area getArea() {
-        return area;
-    }
+	public Area getArea() {
+		return area;
+	}
 
-    public void setEdicion(int edicion) {
-        this.edicion = edicion;
-    }
+	public void setEdicion(int edicion) {
+		this.edicion = edicion;
+	}
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
 
-    public void setArea(Area area) {
-        this.area = area;
-    }
+	public void setArea(Area area) {
+		this.area = area;
+	}
 
 }

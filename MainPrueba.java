@@ -1,11 +1,13 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import ejemplares.Area;
 import ejemplares.Autor;
 import ejemplares.Libro;
+import ejemplares.SinDeudaException;
 import ejemplares.Tesis;
 import files.ArchivoBinario;
 import usuarios.Estudiante;
@@ -60,6 +62,14 @@ public class MainPrueba {
 		area.add(new Area("Ciencias sociales"));
 		area.add(new Area("Humanidades y de las artes"));
 
+		System.out.println(area);
+
+		Iterator<Area> iter = area.iterator();
+
+		while (iter.hasNext()) {
+			System.out.println(iter.next());
+		}
+
 		area.get(0).addSubAreas(makeSubArea());
 
 		ArrayList<Autor> autores = new ArrayList<>();
@@ -74,9 +84,9 @@ public class MainPrueba {
 		}
 
 		Date dateI = libros.get(0).prestar(new Date());
-/* 		for (int i = 0; i < 1200000; i++) {
-			System.out.println(i);
-		} */
+		/*
+		 * for (int i = 0; i < 1200000; i++) { System.out.println(i); }
+		 */
 
 		Scanner sc = new Scanner(System.in);
 		sc.nextLine();
@@ -84,6 +94,14 @@ public class MainPrueba {
 		libros.get(0).regresar(dateI, new Date());
 
 		System.out.println(libros.get(0).getTiempoPrestado());
+
+		long precioDeuda = 0;
+		try {
+			precioDeuda = libros.get(0).precioDeuda(new Estudiante());
+		} catch (SinDeudaException e) {
+			e.printStackTrace();
+		}
+		System.out.println(precioDeuda);
 
 	}// Final main
 

@@ -76,14 +76,9 @@ public abstract class Ejemplar implements IPrestamo, Serializable {
 	public void regresar(Date dateI, Date dateF) {
 		long minutos;
 		if (esPrestado() == true) {
-			System.out.println(dateI.getTime());
-			System.out.println(dateF.getTime());
-			long milis = ((long)(dateF.getTime() - dateI.getTime()));
-			System.out.println(milis);
+			long milis = ((long) (dateF.getTime() - dateI.getTime()));
 			minutos = (long) (milis * 0.0000167F);
-			System.out.println(minutos);
 			setTiempoPrestado(minutos);
-			System.out.println("Entro al if");
 		} else {
 			setTiempoPrestado(0L);
 			System.out.println("No ha sido prestado aun");
