@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 
 import ejemplares.Libro;
 import ejemplares.Tesis;
+import grafics.principal.jframesUtilities.JFAddUser;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -297,7 +298,8 @@ public class PrincipalFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("Cancelar");
+			listaTesis.clearSelection();
+			listaLibros.clearSelection();
 		}
 
 	}
@@ -315,7 +317,8 @@ public class PrincipalFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Añadir usuario");
+			new JFAddUser();
+			dispose();
 		}
 
 	}
@@ -354,6 +357,10 @@ public class PrincipalFrame extends JFrame {
 			System.exit(0);
 		}
 
+	}
+
+	public static void main(String[] args) {
+		new PrincipalFrame();
 	}
 
 }// Final class

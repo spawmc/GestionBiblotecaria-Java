@@ -1,10 +1,14 @@
-package grafics.registroProfesor;
+package grafics.principal.jframesUtilities.registroProfesor;
 
 //Componentes
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import grafics.principal.PrincipalFrame;
+import usuarios.Profesor;
+import util.Administrador;
 
 import java.awt.TextField;
 import java.awt.BorderLayout;
@@ -133,19 +137,39 @@ public class RegistroP extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Presionando boton registrar");
-        }
+            Profesor prof = new Profesor();
+            Administrador admin = new Administrador();
 
+            prof.setNombre(textNombre.getText());
+            prof.setDireccion(textDireccion.getText());
+            prof.setTelefono(Long.parseLong(textTelefono.getText()));
+            prof.setNumeroDePersonal(textNum_personal.getText());
+            prof.setFacultad(textFacultad.getText());
+
+            textNombre.setText("");
+            textDireccion.setText("");
+            textTelefono.setText("");
+            textNum_personal.setText("");
+            textFacultad.setText("");
+
+            System.out.println(prof);
+            admin.añadirProfesor(prof);
+            new PrincipalFrame();
+            dispose();
+        }
     }
 
     class EscuchaCancelar implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("Presionando boton cancelar");
-
+            new PrincipalFrame();
+            dispose();
         }
 
     }
 
+    public static void main(String[] args) {
+        new RegistroP();
+    }
 }

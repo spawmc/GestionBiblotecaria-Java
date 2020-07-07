@@ -30,6 +30,13 @@ public class Estudiante extends Usuario {
 		this.numeroDeEjemplares = numeroDeEjemplares;
 	}
 
+	/**
+	 * 
+	 * @param nombre
+	 * @param direccion
+	 * @param telefono
+	 * @param matricula
+	 */
 	public Estudiante(String nombre, String direccion, Long telefono, String matricula) {
 		super(nombre, direccion, telefono);
 		this.matricula = matricula;

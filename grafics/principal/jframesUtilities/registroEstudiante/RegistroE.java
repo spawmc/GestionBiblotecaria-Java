@@ -1,10 +1,12 @@
-package grafics.registroAlumno;
+package grafics.principal.jframesUtilities.registroEstudiante;
 
 //Componentes
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import grafics.principal.PrincipalFrame;
 
 import java.awt.TextField;
 import java.awt.BorderLayout;
@@ -15,7 +17,7 @@ import java.awt.event.ActionEvent;
 //Events
 import java.awt.event.ActionListener;
 
-public class RegistroA extends JFrame {
+public class RegistroE extends JFrame {
 	private TextField textMatricula;
 	private TextField textNombre;
 	private TextField textDireccion;
@@ -29,7 +31,7 @@ public class RegistroA extends JFrame {
 	private JButton registrar;
 	private JButton cancelar;
 
-	public RegistroA() {
+	public RegistroE() {
 		super("Registro estudiante");
 		setLayout(new BorderLayout());
 
@@ -138,9 +140,8 @@ public class RegistroA extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO
-			System.out.println("Presionando boton cancelar");
-
+			new PrincipalFrame();
+			dispose();
 		}
 
 	}// Final EscuchaCancelar

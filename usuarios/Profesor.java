@@ -4,14 +4,31 @@ import ejemplares.Libro;
 
 public class Profesor extends Usuario {
 	private String numeroDePersonal;
-	int numeroDeEjemplares = 0;
+	private String facultad;
+	private int numeroDeEjemplares = 0;
 
 	public Profesor() {
 	}
 
-	public Profesor(String nombre, String direccion, long telefono, String numeroDePersonal) {
+	public String getFacultad() {
+		return facultad;
+	}
+
+	public void setFacultad(String facultad) {
+		this.facultad = facultad;
+	}
+
+	/**
+	 * 
+	 * @param nombre
+	 * @param direccion
+	 * @param telefono
+	 * @param numeroDePersonal
+	 */
+	public Profesor(String nombre, String direccion, long telefono, String numeroDePersonal, String facultad) {
 		super(nombre, direccion, telefono);
 		this.numeroDePersonal = numeroDePersonal;
+		this.facultad = facultad;
 	}
 
 	@Override

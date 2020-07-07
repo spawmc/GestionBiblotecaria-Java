@@ -36,7 +36,7 @@ public class Login extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     private JPanel _crearPanelCentral() {
