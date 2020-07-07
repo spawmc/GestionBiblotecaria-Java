@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -34,6 +33,28 @@ public class PrincipalFrame extends JFrame {
 	private JButton JBMostrarEjemplaresPrestados;
 
 	private JButton JBSalir;
+
+	// Componenetes del panel
+	private JList<String> listaLibros;
+	private JList<String> listaTesis;
+	ArrayList<Libro> libros;
+	ArrayList<Tesis> tesis;
+
+	// Componentes
+	JLabel displayLabeltoString;
+	String textDisplayLabeltoString = "Detalles de los libros";
+	// JLabels
+	JLabel jlTitulo;
+	JLabel jlAño;
+	JLabel jlAutores;
+	JLabel jlClasificacion;
+	JLabel jlEdicion;
+	JLabel jlIsbn;
+	JLabel jlArea;
+	JLabel jlSubarea;
+	JLabel jlDirector;
+	JLabel jlTipoTesis;
+	JLabel jlPrestado;
 
 	public PrincipalFrame() {
 		super("Gestion Bibliotecaria");
@@ -72,22 +93,6 @@ public class PrincipalFrame extends JFrame {
 
 		return null;
 	}
-
-	// Componentes
-	JLabel displayLabeltoString;
-	String textDisplayLabeltoString = "Detalles de los libros";
-	// JLabels
-	JLabel jlTitulo;
-	JLabel jlAño;
-	JLabel jlAutores;
-	JLabel jlClasificacion;
-	JLabel jlEdicion;
-	JLabel jlIsbn;
-	JLabel jlArea;
-	JLabel jlSubarea;
-	JLabel jlDirector;
-	JLabel jlTipoTesis;
-	JLabel jlPrestado;
 
 	private JPanel _crearPanelCentralCentro() {
 		JPanel p = new JPanel(new BorderLayout());
@@ -129,12 +134,6 @@ public class PrincipalFrame extends JFrame {
 		return p;
 	}
 
-	// Componenetes del panel
-	private JList<String> listaLibros;
-	private JList<String> listaTesis;
-	ArrayList<Libro> libros;
-	ArrayList<Tesis> tesis;
-
 	private JPanel _crearPanelCentralIzquierdo() {
 		JPanel p = new JPanel(new BorderLayout());
 		// Paneles divisores para los list y los su titulo
@@ -171,6 +170,7 @@ public class PrincipalFrame extends JFrame {
 		JScrollPane jscrollDesplazamientoT = new JScrollPane(listaTesis);
 		// AccionesJList
 		listaLibros.addListSelectionListener(new EscuchaSelecionLibro());
+		listaTesis.addListSelectionListener(new EscuchaSeleccionTesis());
 
 		// Se configuran los paneles y se agregan sus componentes
 		panelJListLibros.add(new JLabel("Libros"), BorderLayout.NORTH);
@@ -228,6 +228,10 @@ public class PrincipalFrame extends JFrame {
 		return p;
 	}
 
+	/**
+	 * En caso de ser seleccionado, modifica los JLabels de los componentes del
+	 * libro, ademas de quitar la seleccion de tesis en caso de estar seleccionado
+	 */
 	class EscuchaSelecionLibro implements ListSelectionListener {
 
 		@Override
@@ -244,7 +248,27 @@ public class PrincipalFrame extends JFrame {
 			jlDirector.setText("");
 			jlTipoTesis.setText("");
 			jlPrestado.setText(" Prestado: " + libros.get(index).esPrestado());
+			listaTesis.clearSelection(); // Quitar la seleccion de tesis
+		}
 
+	} // Final class EscuchaSelecionLibro
+
+	class EscuchaSeleccionTesis implements ListSelectionListener {
+
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			int index = listaTesis.getSelectedIndex();
+			jlTitulo.setText(": Titulo: " + tesis.get(index).getTitulo());
+			jlAño.setText(" Año: " + tesis.get(index).getAño());
+			jlClasificacion.setText(" Clasificacion: " + tesis.get(index).getClasificacion());
+			jlDirector.setText(" Director: " + tesis.get(index).getDirector());
+			jlTipoTesis.setText(" Tipo de tesis: " + tesis.get(index).getTipoTesis());
+			jlAutores.setText(" Autores: " + tesis.get(index).getAutores());
+			jlEdicion.setText("");
+			jlIsbn.setText("");
+			jlArea.setText("");
+			jlSubarea.setText("");
+			listaTesis.clearSelection(); // Quita la seleccion de libro
 		}
 
 	}
