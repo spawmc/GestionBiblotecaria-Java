@@ -7,8 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import ejemplares.Libro;
 import ejemplares.Tesis;
@@ -22,17 +20,22 @@ import java.util.ArrayList;
 import util.UtilJList;
 
 //Events
-
 import java.awt.event.*;
+
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class PrincipalFrame extends JFrame {
 
-	private JButton JBAñadirUsuario;
-	private JButton JBAñadirTesis;
-	private JButton JBAñadirLibro;
-	private JButton JBMostrarEjemplaresPrestados;
+	private JButton jBAñadirUsuario;
+	private JButton jBAñadirTesis;
+	private JButton jBAñadirLibro;
+	private JButton jBMostrarEjemplaresPrestados;
 
-	private JButton JBSalir;
+	private JButton jBSalir;
+
+	private JButton jBPrestar;
+	private JButton jBCancelar;
 
 	// Componenetes del panel
 	private JList<String> listaLibros;
@@ -80,18 +83,27 @@ public class PrincipalFrame extends JFrame {
 
 		JPanel panelCentralIzquierdo = _crearPanelCentralIzquierdo();
 		JPanel panelCentralCentro = _crearPanelCentralCentro();
-		// JPanel panelCentralDerecho = _crearPanelCentralDerecho();
+		JPanel panelCentralDerecho = _crearPanelCentralDerecho();
 
 		p.add(panelCentralIzquierdo, BorderLayout.WEST);
 		p.add(panelCentralCentro, BorderLayout.CENTER);
-		// p.add(panelCentralDerecho, BorderLayout.EAST);
+		p.add(panelCentralDerecho, BorderLayout.EAST);
 
 		return p;
 	}
 
 	private JPanel _crearPanelCentralDerecho() {
+		JPanel p = new JPanel();
+		p.setLayout(new FlowLayout());
+		jBPrestar = new JButton("Prestar");
+		jBCancelar = new JButton("Cancelar");
+		jBCancelar.addActionListener(new EscuchaCancelar());
+		jBPrestar.addActionListener(new EscuchaPrestar());
 
-		return null;
+		p.add(jBCancelar);
+		p.add(jBPrestar);
+
+		return p;
 	}
 
 	private JPanel _crearPanelCentralCentro() {
@@ -192,18 +204,24 @@ public class PrincipalFrame extends JFrame {
 		JPanel p = new JPanel(new BorderLayout());
 		JPanel panelIzquiero = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel panelDerecho = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		JBAñadirUsuario = new JButton("Añadir usuario");
-		JBAñadirTesis = new JButton("Añadir tesis");
-		JBAñadirLibro = new JButton("Añadir libro");
-		JBMostrarEjemplaresPrestados = new JButton("Ejemplares prestados");
+		jBAñadirUsuario = new JButton("Añadir usuario");
+		jBAñadirTesis = new JButton("Añadir tesis");
+		jBAñadirLibro = new JButton("Añadir libro");
+		jBMostrarEjemplaresPrestados = new JButton("Ejemplares prestados");
 
-		panelIzquiero.add(JBAñadirUsuario);
-		panelIzquiero.add(JBAñadirTesis);
-		panelIzquiero.add(JBAñadirLibro);
-		panelIzquiero.add(JBMostrarEjemplaresPrestados);
+		// Actions listeners
+		jBAñadirUsuario.addActionListener(new EscuchaAñadirUsuario());
+		jBAñadirTesis.addActionListener(new EscuchaAñadirTesis());
+		jBAñadirLibro.addActionListener(new EscuchaAñadirLibro());
+		jBMostrarEjemplaresPrestados.addActionListener(new EscuchaEjemplaresPrestados());
 
-		JBSalir = new JButton("Salir");
-		panelDerecho.add(JBSalir);
+		panelIzquiero.add(jBAñadirUsuario);
+		panelIzquiero.add(jBAñadirTesis);
+		panelIzquiero.add(jBAñadirLibro);
+		panelIzquiero.add(jBMostrarEjemplaresPrestados);
+
+		jBSalir = new JButton("Salir");
+		panelDerecho.add(jBSalir);
 
 		p.add(panelIzquiero, BorderLayout.WEST);
 		p.add(panelDerecho, BorderLayout.EAST);
@@ -269,6 +287,69 @@ public class PrincipalFrame extends JFrame {
 			jlArea.setText("");
 			jlSubarea.setText("");
 			listaTesis.clearSelection(); // Quita la seleccion de libro
+		}
+
+	}
+
+	class EscuchaCancelar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("Cancelar");
+		}
+
+	}
+
+	class EscuchaPrestar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("Prestar");
+		}
+
+	}
+
+	class EscuchaAñadirUsuario implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Añadir usuario");
+		}
+
+	}
+
+	class EscuchaAñadirTesis implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Añadir tesis");
+		}
+
+	}
+
+	class EscuchaAñadirLibro implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Añadir libro");
+		}
+
+	}
+
+	class EscuchaEjemplaresPrestados implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Mostrar ejemplares prestados");
+		}
+
+	}
+
+	class EscuchaSalir implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Salir");
 		}
 
 	}
