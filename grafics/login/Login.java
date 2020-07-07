@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import grafics.principal.PrincipalFrame;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -86,9 +88,8 @@ public class Login extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            // TODO Auto-generated method stub
-            System.out.println("Ingresar");
-
+            PrincipalFrame principalFrame = new PrincipalFrame();
+            dispose(); //Desaparece la ventana
         }
 
     }

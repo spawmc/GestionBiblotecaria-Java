@@ -221,6 +221,8 @@ public class PrincipalFrame extends JFrame {
 		panelIzquiero.add(jBMostrarEjemplaresPrestados);
 
 		jBSalir = new JButton("Salir");
+		// Action Listeners
+		jBSalir.addActionListener(new EscuchaSalir());
 		panelDerecho.add(jBSalir);
 
 		p.add(panelIzquiero, BorderLayout.WEST);
@@ -349,12 +351,9 @@ public class PrincipalFrame extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println("Salir");
+			System.exit(0);
 		}
 
 	}
 
-	public static void main(String[] args) {
-		new PrincipalFrame();
-	}
 }// Final class
