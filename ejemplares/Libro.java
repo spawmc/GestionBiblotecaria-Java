@@ -38,6 +38,26 @@ public class Libro extends Ejemplar {
 		this.numEjemplares = 1;
 	}
 
+	/**
+	 * funcion unicamente para testear
+	 * 
+	 * @return un {@code ArrayList} de libros
+	 */
+	public static ArrayList<Libro> makeBookList() {
+		ArrayList<Libro> libros = new ArrayList<>();
+		ArrayList<Autor> autores = new ArrayList<>();
+		for (int i = 0; i < 3; i++) {
+			autores.add(new Autor("Autor: " + i));
+		}
+
+		for (int i = 0; i < 20; i++) {
+			libros.add(new Libro("Libro " + i+1, (short) (2005 + i), "De bolsillo", 2 + i, "123124412ASDAS", autores,
+					new Area("Aasd"), new Area.SubArea("asdasd")));
+		}
+
+		return libros;
+	}
+
 	public int getNumEjemplares() {
 		return numEjemplares;
 	}

@@ -33,6 +33,26 @@ public class Tesis extends Ejemplar {
     public Tesis() {
     }
 
+    /**
+     * funcion unicamente para testear
+     * 
+     * @return un {@code ArrayList} de Tesis
+     */
+    public static ArrayList<Tesis> makeTesisList() {
+        ArrayList<Tesis> tesis = new ArrayList<>();
+        ArrayList<Autor> autores = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            autores.add(new Autor("Autor: " + 1));
+        }
+
+        for (int i = 0; i < 20; i++) {
+            tesis.add(new Tesis());
+            tesis.get(i).setTitulo("Tesis " + i+1);
+        }
+
+        return tesis;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "\nDirector: " + getDirector() + "\nTipo de tesis: " + getTipoTesis();

@@ -66,7 +66,7 @@ public class Login extends JFrame {
         JPanel p = new JPanel(new FlowLayout());
         JLabel saludo = new JLabel("Bienvenido");
 
-        //Modificando el tamaño de la fuente
+        // Modificando el tamaño de la fuente
         Font fontAux = saludo.getFont();
         saludo.setFont(new Font(fontAux.getFontName(), fontAux.getStyle(), 50));
 
@@ -100,6 +100,10 @@ public class Login extends JFrame {
             System.exit(0);
         }
 
+    }
+
+    public static void main(String[] args) {
+        new Login();
     }
 
 }// Final class
