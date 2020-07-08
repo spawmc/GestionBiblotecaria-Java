@@ -1,6 +1,7 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import ejemplares.Libro;
 import ejemplares.Tesis;
@@ -29,9 +30,16 @@ public class UtilJList {
 	 */
 	public static String[] sacarNombreTesis(ArrayList<Tesis> arrayListTesis) {
 		String[] str = new String[arrayListTesis.size()];
-		for (int i = 0; i < arrayListTesis.size(); i++) {
+
+		Iterator<Tesis> iter = arrayListTesis.iterator();
+
+		int i = 0;
+		while (iter.hasNext()) {
 			str[i] = arrayListTesis.get(i).getTitulo();
+			iter.next();
+			i++;
 		}
+
 		return str;
 	}
 

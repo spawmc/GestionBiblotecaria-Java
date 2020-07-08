@@ -5,11 +5,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import ejemplares.Libro;
 import ejemplares.Tesis;
+import files.ArchivoBinario;
+import grafics.principal.jframesUtilities.JFAddLibro;
+import grafics.principal.jframesUtilities.JFAddTesis;
 import grafics.principal.jframesUtilities.JFAddUser;
 
 import java.awt.BorderLayout;
@@ -22,6 +26,7 @@ import util.UtilJList;
 
 //Events
 import java.awt.event.*;
+import java.io.IOException;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -34,15 +39,38 @@ public class PrincipalFrame extends JFrame {
 	private JButton jBMostrarEjemplaresPrestados;
 
 	private JButton jBSalir;
+	private JButton jBPrestarT;
+	private JButton jBCancelarT;
 
-	private JButton jBPrestar;
-	private JButton jBCancelar;
+	private JButton jBPrestarL;
+	private JButton jBCancelarL;
 
 	// Componenetes del panel
 	private JList<String> listaLibros;
 	private JList<String> listaTesis;
+
+	// Manejador de archivos
+	ArchivoBinario file = new ArchivoBinario();
+
+	// Contenedores
 	ArrayList<Libro> libros;
 	ArrayList<Tesis> tesis;
+
+	public ArrayList<Libro> getLibros() {
+		return libros;
+	}
+
+	public ArrayList<Tesis> getTesis() {
+		return tesis;
+	}
+
+	public void setLibros(ArrayList<Libro> libros) {
+		this.libros = libros;
+	}
+
+	public void setTesis(ArrayList<Tesis> tesis) {
+		this.tesis = tesis;
+	}
 
 	// Componentes
 	JLabel displayLabeltoString;
@@ -73,7 +101,7 @@ public class PrincipalFrame extends JFrame {
 		JPanel panelSur = _crearPanelSur();
 		add(panelSur, BorderLayout.SOUTH);
 
-		pack();
+		setSize(900,350);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -84,25 +112,9 @@ public class PrincipalFrame extends JFrame {
 
 		JPanel panelCentralIzquierdo = _crearPanelCentralIzquierdo();
 		JPanel panelCentralCentro = _crearPanelCentralCentro();
-		JPanel panelCentralDerecho = _crearPanelCentralDerecho();
 
 		p.add(panelCentralIzquierdo, BorderLayout.WEST);
 		p.add(panelCentralCentro, BorderLayout.CENTER);
-		p.add(panelCentralDerecho, BorderLayout.EAST);
-
-		return p;
-	}
-
-	private JPanel _crearPanelCentralDerecho() {
-		JPanel p = new JPanel();
-		p.setLayout(new FlowLayout());
-		jBPrestar = new JButton("Prestar");
-		jBCancelar = new JButton("Cancelar");
-		jBCancelar.addActionListener(new EscuchaCancelar());
-		jBPrestar.addActionListener(new EscuchaPrestar());
-
-		p.add(jBCancelar);
-		p.add(jBPrestar);
 
 		return p;
 	}
@@ -147,6 +159,26 @@ public class PrincipalFrame extends JFrame {
 		return p;
 	}
 
+	public void cargarLibros() {
+		try {
+			setLibros(file.leerDatosLibros());
+		} catch (ClassNotFoundException | IOException e) {
+			JOptionPane.showConfirmDialog(null, "No se ha podido leer o encontrar el archivo :( ", "ERROR",
+					JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
+	public void cargarTesis() {
+		try {
+			setTesis(file.leerDatosTesis());
+		} catch (ClassNotFoundException | IOException e) {
+			JOptionPane.showConfirmDialog(null, "No se ha podido leer o encontrar el archivo :( ", "ERROR",
+					JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+
 	private JPanel _crearPanelCentralIzquierdo() {
 		JPanel p = new JPanel(new BorderLayout());
 		// Paneles divisores para los list y los su titulo
@@ -156,11 +188,30 @@ public class PrincipalFrame extends JFrame {
 		JPanel panelJListLibros = new JPanel(new BorderLayout());
 		JPanel panelJListTesis = new JPanel(new BorderLayout());
 
+		JPanel panelJListLibrosSur = new JPanel(new FlowLayout());
+		JPanel panelJListTesisSur = new JPanel(new FlowLayout());
+		// Se instancian botones del lado sur
+		jBPrestarL = new JButton("Prestar libro");
+		jBPrestarT = new JButton("Prestar tesis");
+		jBCancelarL = new JButton("Cancelar");
+		jBCancelarT = new JButton("Cancelar");
+
+		jBPrestarL.addActionListener(new EscuchaPrestarL());
+		jBPrestarT.addActionListener(new EscuchaPrestaT());
+		jBCancelarL.addActionListener(new EscuchaCancelarL());
+		jBCancelarT.addActionListener(new EscuchaCancelarT());
+
+		panelJListLibrosSur.add(jBCancelarL);
+		panelJListLibrosSur.add(jBPrestarL);
+
+		panelJListTesisSur.add(jBCancelarT);
+		panelJListTesisSur.add(jBPrestarT);
+
 		/*
 		 * Se traen los lirbos con las siguentes funciones y se saca el nombre de cada
 		 * uno de ellos
 		 */
-		libros = Libro.makeBookList();
+		cargarLibros();
 		String[] nombreLibros = new String[libros.size()];
 		nombreLibros = UtilJList.sacarNombreLibros(libros);
 
@@ -168,7 +219,7 @@ public class PrincipalFrame extends JFrame {
 		 * Se traen las tesis con las siguentes funciones y se saca el nombre de cada
 		 * uno de ellos
 		 */
-		tesis = Tesis.makeTesisList();
+		cargarTesis();
 		String[] nombreTesis = new String[tesis.size()];
 		nombreTesis = UtilJList.sacarNombreTesis(tesis);
 
@@ -190,6 +241,9 @@ public class PrincipalFrame extends JFrame {
 		panelJListLibros.add(jscrollDesplazamientoL, BorderLayout.CENTER);
 		panelJListTesis.add(new JLabel("Tesis"), BorderLayout.NORTH);
 		panelJListTesis.add(jscrollDesplazamientoT, BorderLayout.CENTER);
+
+		panelJListLibros.add(panelJListLibrosSur, BorderLayout.SOUTH);
+		panelJListTesis.add(panelJListTesisSur, BorderLayout.SOUTH);
 
 		// Se agregan a los paneles correspondientes
 		panelIzquierdo.add(panelJListLibros, BorderLayout.WEST);
@@ -258,18 +312,24 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			int index = listaLibros.getSelectedIndex();
-			jlTitulo.setText(" Titulo: " + libros.get(index).getTitulo());
-			jlAño.setText(" Año: " + libros.get(index).getAño());
-			jlAutores.setText(" Autores: " + libros.get(index).getAutores());
-			jlClasificacion.setText(" Clasificación: " + libros.get(index).getClasificacion());
-			jlEdicion.setText(" Edición: " + libros.get(index).getEdicion());
-			jlIsbn.setText(" ISBN: " + libros.get(index).getIsbn());
-			jlArea.setText(" Area: " + libros.get(index).getArea());
-			jlSubarea.setText(" Sub-Area: " + libros.get(index).getSubarea());
-			jlDirector.setText("");
-			jlTipoTesis.setText("");
-			jlPrestado.setText(" Prestado: " + libros.get(index).esPrestado());
-			listaTesis.clearSelection(); // Quitar la seleccion de tesis
+			if (listaLibros.getSelectedIndex() != -1) {
+				jlTitulo.setText(" Titulo: " + libros.get(index).getTitulo());
+				jlAño.setText(" Año: " + libros.get(index).getAño());
+				jlAutores.setText(" Autores: " + libros.get(index).getAutores());
+				jlClasificacion.setText(" Clasificación: " + libros.get(index).getClasificacion());
+				jlEdicion.setText(" Edición: " + libros.get(index).getEdicion());
+				jlIsbn.setText(" ISBN: " + libros.get(index).getIsbn());
+				jlArea.setText(" Area: " + libros.get(index).getArea());
+				jlSubarea.setText(" Sub-Area: " + libros.get(index).getSubarea());
+				jlDirector.setText("");
+				jlTipoTesis.setText("");
+				jlPrestado.setText(" Prestado: " + libros.get(index).esPrestado());
+			} else {
+				System.out.println("Sin seleccion");
+			}
+			if (!listaTesis.isSelectionEmpty()) {
+				listaTesis.clearSelection(); // Quitar la seleccion de tesis
+			}
 		}
 
 	} // Final class EscuchaSelecionLibro
@@ -279,36 +339,64 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			int index = listaTesis.getSelectedIndex();
-			jlTitulo.setText(": Titulo: " + tesis.get(index).getTitulo());
-			jlAño.setText(" Año: " + tesis.get(index).getAño());
-			jlClasificacion.setText(" Clasificacion: " + tesis.get(index).getClasificacion());
-			jlDirector.setText(" Director: " + tesis.get(index).getDirector());
-			jlTipoTesis.setText(" Tipo de tesis: " + tesis.get(index).getTipoTesis());
-			jlAutores.setText(" Autores: " + tesis.get(index).getAutores());
-			jlEdicion.setText("");
-			jlIsbn.setText("");
-			jlArea.setText("");
-			jlSubarea.setText("");
-			listaTesis.clearSelection(); // Quita la seleccion de libro
+			if (listaTesis.getSelectedIndex() != -1) {
+				System.out.println("TESIS SELECTION" + index);
+				jlTitulo.setText(": Titulo: " + tesis.get(index).getTitulo());
+				jlAño.setText(" Año: " + tesis.get(index).getAño());
+				jlClasificacion.setText(" Clasificacion: " + tesis.get(index).getClasificacion());
+				jlDirector.setText(" Director: " + tesis.get(index).getDirector());
+				jlTipoTesis.setText(" Tipo de tesis: " + tesis.get(index).getTipoTesis());
+				jlAutores.setText(" Autores: " + tesis.get(index).getAutores());
+				jlEdicion.setText("");
+				jlIsbn.setText("");
+				jlArea.setText("");
+				jlSubarea.setText("");
+			} else {
+				System.out.println("Sin seleccion");
+			}
+			if (!listaTesis.isSelectionEmpty()) {
+				listaTesis.clearSelection(); // Quita la seleccion de libro
+			}
 		}
 
 	}
 
-	class EscuchaCancelar implements ActionListener {
+	class EscuchaCancelarT implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			listaTesis.clearSelection();
-			listaLibros.clearSelection();
+		public void actionPerformed(ActionEvent e) {
+			if (!listaTesis.isSelectionEmpty()) {
+				listaTesis.clearSelection();
+			}
 		}
 
 	}
 
-	class EscuchaPrestar implements ActionListener {
+	class EscuchaPrestaT implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Escuchaprestar t");
+		}
+
+	}
+
+	class EscuchaCancelarL implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			System.out.println("Prestar");
+			if (!listaLibros.isSelectionEmpty()) {
+				listaLibros.clearSelection();
+			}
+		}
+
+	}
+
+	class EscuchaPrestarL implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			System.out.println("Prestarl");
 		}
 
 	}
@@ -328,6 +416,8 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Añadir tesis");
+			new JFAddTesis();
+			dispose();
 		}
 
 	}
@@ -337,6 +427,8 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Añadir libro");
+			new JFAddLibro();
+			dispose();
 		}
 
 	}
