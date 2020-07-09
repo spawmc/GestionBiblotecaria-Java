@@ -4,12 +4,22 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import ejemplares.Area;
+import ejemplares.Autor;
+import ejemplares.Libro;
+import grafics.principal.PrincipalFrame;
+import util.Administrador;
+
 import javax.swing.BoxLayout;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class JFAddLibro extends JFrame {
 
@@ -29,7 +39,7 @@ public class JFAddLibro extends JFrame {
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 
 	private TextField textTitulo;
@@ -48,6 +58,8 @@ public class JFAddLibro extends JFrame {
 		JPanel p = new JPanel(new FlowLayout());
 		jBRegistrar = new JButton("Registrar");
 		jBCancelar = new JButton("Cancelar");
+		jBRegistrar.addActionListener(new EscuchaRegistrar());
+		jBCancelar.addActionListener(new EscuchaCancelar());
 
 		p.add(jBCancelar);
 		p.add(jBRegistrar);
@@ -105,8 +117,41 @@ public class JFAddLibro extends JFrame {
 		return p;
 	}
 
-	public static void main(String[] args) {
-		new JFAddLibro();
-	}
+	class EscuchaRegistrar implements ActionListener {
 
-}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Registrar");
+			Libro newLibro = new Libro();
+			Administrador admin = new Administrador();
+			newLibro.setTitulo(textTitulo.getText());
+			newLibro.setAño(Short.parseShort(textAño.getText()));
+			newLibro.setClasificacion(textClasificacion.getText());
+			newLibro.setEdicion(Integer.parseInt(textEdicion.getText()));
+			newLibro.setIsbn(textIsbn.getText());
+			ArrayList<Autor> autores = new ArrayList<>();
+			autores.add(new Autor(textAutor.getText()));
+			newLibro.setAutores(autores);
+			newLibro.setArea(new Area(textArea.getText()));
+			newLibro.setSubarea(new Area.SubArea(textSubarea.getText()));
+
+			admin.añadirLibro(newLibro);
+			new PrincipalFrame();
+			dispose();
+		}
+
+	}// Final class
+
+	class EscuchaCancelar implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Cancelar");
+			new PrincipalFrame();
+			dispose();
+
+		}
+
+	}// Final class
+
+}// Final class

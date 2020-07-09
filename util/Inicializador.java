@@ -92,9 +92,12 @@ public class Inicializador {
 
 	}
 
-	/*
-	 * public static void main(String[] args) { Inicializador i = new
-	 * Inicializador(); // i.makeLibros(); // i.makeProfesor(); //
-	 * i.makeEstudiantes(); // i.makeTesis(); }
-	 */
+	public static void main(String[] args) {
+		Inicializador i = new Inicializador();
+		// i.makeLibros();
+		i.makeProfesor();
+		i.makeEstudiantes();
+		// i.makeTesis();
+	}
+
 }

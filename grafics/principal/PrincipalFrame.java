@@ -15,6 +15,7 @@ import files.ArchivoBinario;
 import grafics.principal.jframesUtilities.JFAddLibro;
 import grafics.principal.jframesUtilities.JFAddTesis;
 import grafics.principal.jframesUtilities.JFAddUser;
+import grafics.principal.jframesUtilities.prestamos.PrestarLibro;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -22,6 +23,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.util.ArrayList;
 
+import util.Mensajero;
 import util.UtilJList;
 
 //Events
@@ -45,9 +47,19 @@ public class PrincipalFrame extends JFrame {
 	private JButton jBPrestarL;
 	private JButton jBCancelarL;
 
+	private Mensajero index = null;
+
 	// Componenetes del panel
 	private JList<String> listaLibros;
 	private JList<String> listaTesis;
+
+	public JList<String> getListaLibros() {
+		return listaLibros;
+	}
+
+	public JList<String> getListaTesis() {
+		return listaTesis;
+	}
 
 	// Manejador de archivos
 	ArchivoBinario file = new ArchivoBinario();
@@ -55,22 +67,6 @@ public class PrincipalFrame extends JFrame {
 	// Contenedores
 	ArrayList<Libro> libros;
 	ArrayList<Tesis> tesis;
-
-	public ArrayList<Libro> getLibros() {
-		return libros;
-	}
-
-	public ArrayList<Tesis> getTesis() {
-		return tesis;
-	}
-
-	public void setLibros(ArrayList<Libro> libros) {
-		this.libros = libros;
-	}
-
-	public void setTesis(ArrayList<Tesis> tesis) {
-		this.tesis = tesis;
-	}
 
 	// Componentes
 	JLabel displayLabeltoString;
@@ -101,21 +97,63 @@ public class PrincipalFrame extends JFrame {
 		JPanel panelSur = _crearPanelSur();
 		add(panelSur, BorderLayout.SOUTH);
 
-		setSize(900,350);
+		setSize(900, 350);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}// Final constructor
+
+	public ArrayList<Libro> getLibros() {
+		return libros;
+	}
+
+	public ArrayList<Tesis> getTesis() {
+		return tesis;
+	}
+
+	public void setLibros(ArrayList<Libro> libros) {
+		this.libros = libros;
+	}
+
+	public void setTesis(ArrayList<Tesis> tesis) {
+		this.tesis = tesis;
+	}
 
 	private JPanel _crearPanelCentral() {
 		JPanel p = new JPanel(new BorderLayout());
 
 		JPanel panelCentralIzquierdo = _crearPanelCentralIzquierdo();
 		JPanel panelCentralCentro = _crearPanelCentralCentro();
+		JPanel panelCentralDerecho = _crearPanelCentralDerecho();
 
 		p.add(panelCentralIzquierdo, BorderLayout.WEST);
 		p.add(panelCentralCentro, BorderLayout.CENTER);
+		p.add(panelCentralDerecho, BorderLayout.EAST);
 
+		return p;
+	}
+
+	private JButton jBRegresarLibro = null;
+	private JButton jBRegresarTesis = null;
+
+	private JPanel _crearPanelCentralDerecho() {
+		JPanel p = new JPanel(new BorderLayout());
+		JPanel panelNorte = new JPanel(new FlowLayout());
+		JPanel panelCentral = new JPanel();
+		panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
+
+		jBRegresarLibro = new JButton("Regresar libro");
+		jBRegresarTesis = new JButton("Regresar tesis");
+		panelNorte.add(new JLabel("        "));
+
+		jBRegresarLibro.addActionListener(new EscuchaRegresarLibro());
+		jBRegresarTesis.addActionListener(new EscuchaRegresarTesis());
+
+		panelCentral.add(jBRegresarLibro);
+		panelCentral.add(jBRegresarTesis);
+
+		p.add(panelNorte, BorderLayout.NORTH);
+		p.add(panelCentral, BorderLayout.CENTER);
 		return p;
 	}
 
@@ -341,7 +379,7 @@ public class PrincipalFrame extends JFrame {
 			int index = listaTesis.getSelectedIndex();
 			if (listaTesis.getSelectedIndex() != -1) {
 				System.out.println("TESIS SELECTION" + index);
-				jlTitulo.setText(": Titulo: " + tesis.get(index).getTitulo());
+				jlTitulo.setText(" Titulo: " + tesis.get(index).getTitulo());
 				jlAño.setText(" Año: " + tesis.get(index).getAño());
 				jlClasificacion.setText(" Clasificacion: " + tesis.get(index).getClasificacion());
 				jlDirector.setText(" Director: " + tesis.get(index).getDirector());
@@ -368,6 +406,17 @@ public class PrincipalFrame extends JFrame {
 			if (!listaTesis.isSelectionEmpty()) {
 				listaTesis.clearSelection();
 			}
+			jlTitulo.setText(" Titulo: ");
+			jlAño.setText(" Año: ");
+			jlAutores.setText(" Autores: ");
+			jlClasificacion.setText(" Clasificación: ");
+			jlEdicion.setText("");
+			jlIsbn.setText("");
+			jlArea.setText("");
+			jlSubarea.setText("");
+			jlDirector.setText(" Director: ");
+			jlTipoTesis.setText(" Tipo de tesis: ");
+			jlPrestado.setText(" Prestado: ");
 		}
 
 	}
@@ -377,6 +426,7 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Escuchaprestar t");
+
 		}
 
 	}
@@ -388,6 +438,17 @@ public class PrincipalFrame extends JFrame {
 			if (!listaLibros.isSelectionEmpty()) {
 				listaLibros.clearSelection();
 			}
+			jlTitulo.setText(" Titulo: ");
+			jlAño.setText(" Año: ");
+			jlAutores.setText(" Autores: ");
+			jlClasificacion.setText(" Clasificación: ");
+			jlEdicion.setText(" Edición: ");
+			jlIsbn.setText(" ISBN: ");
+			jlArea.setText(" Area: ");
+			jlSubarea.setText(" Sub-Area: ");
+			jlDirector.setText("");
+			jlTipoTesis.setText("");
+			jlPrestado.setText(" Prestado: ");
 		}
 
 	}
@@ -397,6 +458,20 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			System.out.println("Prestarl");
+			// int index_list = listaLibros.getSelectedIndex();
+			if (listaLibros.getSelectedIndex() != -1) {
+				if (libros.get(listaLibros.getSelectedIndex()).esPrestado()) {
+					JOptionPane.showMessageDialog(null, "El libro ya ha sido prestado");
+				} else {
+					index = Mensajero.getInstance();
+					System.out.println(listaLibros.getSelectedIndex());
+					index.setPosicion(listaLibros.getSelectedIndex());
+					new PrestarLibro();
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No ha seleccionado ningun libro");
+			}
+
 		}
 
 	}
@@ -447,6 +522,25 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);
+		}
+
+	}
+
+	class EscuchaRegresarLibro implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Regresar libro");
+
+		}
+
+	}
+
+	class EscuchaRegresarTesis implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("Regresar tesis");
 		}
 
 	}

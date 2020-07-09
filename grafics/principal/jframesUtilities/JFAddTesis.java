@@ -46,7 +46,7 @@ public class JFAddTesis extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     private JPanel _crearPanelCentral() {
@@ -132,7 +132,7 @@ public class JFAddTesis extends JFrame {
             dispose();
         }
 
-    }
+    }// Final class
 
     class EscuchaCancelar implements ActionListener {
 
@@ -141,12 +141,8 @@ public class JFAddTesis extends JFrame {
             System.out.println("Cancelar");
             new PrincipalFrame();
             dispose();
+
         }
 
-    }
-
-    public static void main(String[] args) {
-        new JFAddTesis();
-    }
-
-}
+    }// Final class
+}// Final class

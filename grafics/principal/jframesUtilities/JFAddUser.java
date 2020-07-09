@@ -39,7 +39,7 @@ public class JFAddUser extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         // TODO: Agregar la opcion de salir para que no cierre el programa, sino solo se
         // libere
 

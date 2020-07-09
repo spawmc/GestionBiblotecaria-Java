@@ -15,7 +15,7 @@ import usuarios.Usuario;
 public abstract class Ejemplar implements IPrestamo, Serializable {
 	protected String titulo;
 	protected short año;
-	protected boolean prestado;
+	protected boolean prestado = false;
 	protected ArrayList<Autor> autores;
 	protected long tiempoPrestado;
 	protected String clasificacion;

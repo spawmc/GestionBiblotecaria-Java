@@ -1,12 +1,33 @@
 package usuarios;
 
+import java.util.ArrayList;
+
 import ejemplares.Libro;
+import ejemplares.Tesis;
 
 public class Estudiante extends Usuario {
 	private String matricula;
 	private int numeroDeEjemplares = 0;
+	private ArrayList<Tesis> tesis = new ArrayList<>();
+	private ArrayList<Libro> libros = new ArrayList<>();
 
 	public Estudiante() {
+	}
+
+	public ArrayList<Libro> getLibros() {
+		return libros;
+	}
+
+	public void setLibros(ArrayList<Libro> libros) {
+		this.libros = libros;
+	}
+
+	public ArrayList<Tesis> getTesis() {
+		return tesis;
+	}
+
+	public void setTesis(ArrayList<Tesis> tesis) {
+		this.tesis = tesis;
 	}
 
 	@Override
