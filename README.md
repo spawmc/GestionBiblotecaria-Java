@@ -12,19 +12,19 @@ Proyecto final Programación
 
 **Usar a través de git**
 
-    ´´git clone https://github.com/spawmc/GestionBiblotecaria-Java.git´´
+    ```git clone https://github.com/spawmc/GestionBiblotecaria-Java.git```
 
-    podemos compilar por medio del scrip ´compilador.sh´ o usar directamente desde los archivos ya compilados haciendo uso de ´java GestionBibliotecaria´
+    podemos compilar por medio del scrip ```compilador.sh``` o usar directamente desde los archivos ya compilados haciendo uso de ```java GestionBibliotecaria```
 
 **¿Como compilar con el script?**
 
-- Le daremos permisos de lectura, escritura y ejecución usando 'chmod +x compilador.sh' o 'chmod +777 compilador.sh'
+- Le daremos permisos de lectura, escritura y ejecución usando ```chmod +x compilador.sh``` o ```chmod +777 compilador.sh```
 
 **¿Como ejecutar?**
 
 - Tenemos dos opciones: 
-    1. Ejecutar el script, dando permisos de lectura, escritura y ejecución: ´chmod +x ejecutador.sh´ o bien,
-    2. Podemos usar ´java GestionBibliotecaria´ y listo :).
+    1. Ejecutar el script, dando permisos de lectura, escritura y ejecución: ```chmod +x ejecutador.sh``` o bien,
+    2. Podemos usar ```java GestionBibliotecaria``` y listo :).
 
 ## Mi versión de JDK
 ![Screenshot_JDK](img/VersionJDK.png)
