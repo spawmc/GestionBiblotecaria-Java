@@ -13,7 +13,6 @@ import ejemplares.Tesis;
 import files.ArchivoBinario;
 import usuarios.Estudiante;
 import usuarios.Profesor;
-import util.Gerente;
 import util.GestorDeEjemplares;
 import util.Mensajero;
 import util.UtilJList;

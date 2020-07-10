@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import ejemplares.Libro;
 import ejemplares.Tesis;
 import files.ArchivoBinario;
+import grafics.principal.PrincipalFrame;
 import usuarios.Estudiante;
 import usuarios.Profesor;
 import util.Gerente;
@@ -252,6 +253,7 @@ public class PrestarLibro extends JFrame {
 					}
 
 					JOptionPane.showMessageDialog(null, "Se a guardado la información del prestamo");
+					new PrincipalFrame();
 					dispose();
 
 				} else {
@@ -288,6 +290,7 @@ public class PrestarLibro extends JFrame {
 					}
 
 					JOptionPane.showMessageDialog(null, "Se a guardado la información del prestamo");
+					new PrincipalFrame();
 					dispose();
 
 				} else {

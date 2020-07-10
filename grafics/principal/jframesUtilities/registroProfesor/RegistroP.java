@@ -169,7 +169,4 @@ public class RegistroP extends JFrame {
 
     }
 
-    public static void main(String[] args) {
-        new RegistroP();
-    }
 }

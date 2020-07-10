@@ -303,7 +303,7 @@ public class PrincipalFrame extends JFrame {
 		jBAñadirUsuario = new JButton("Añadir usuario");
 		jBAñadirTesis = new JButton("Añadir tesis");
 		jBAñadirLibro = new JButton("Añadir libro");
-		jBMostrarEjemplaresPrestados = new JButton("Ejemplares prestados");
+		jBMostrarEjemplaresPrestados = new JButton("Ejemplares prestados (ALFA)");
 
 		// Actions listeners
 		jBAñadirUsuario.addActionListener(new EscuchaAñadirUsuario());
@@ -429,14 +429,16 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Escuchaprestar t");
-			if(listaTesis.getSelectedIndex() != -1){
-				if(tesis.get(listaTesis.getSelectedIndex()).esPrestado()) {
+			if (listaTesis.getSelectedIndex() != -1) {
+				if (tesis.get(listaTesis.getSelectedIndex()).esPrestado()) {
 					JOptionPane.showMessageDialog(null, "La tesis ya ha sido prestada");
 				} else {
 					index = Mensajero.getInstance();
 					new PrestarTesis();
 					dispose();
 				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No ha seleccionado ninguna Tesis");
 			}
 
 		}
@@ -559,10 +561,6 @@ public class PrincipalFrame extends JFrame {
 			dispose();
 		}
 
-	}
-
-	public static void main(String[] args) {
-		new PrincipalFrame();
 	}
 
 }// Final class

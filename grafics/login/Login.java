@@ -89,7 +89,7 @@ public class Login extends JFrame {
         @Override
         public void actionPerformed(ActionEvent arg0) {
             PrincipalFrame principalFrame = new PrincipalFrame();
-            dispose(); //Desaparece la ventana
+            dispose(); // Desaparece la ventana
         }
 
     }
@@ -101,10 +101,6 @@ public class Login extends JFrame {
             System.exit(0);
         }
 
-    }
-
-    public static void main(String[] args) {
-        new Login();
     }
 
 }// Final class

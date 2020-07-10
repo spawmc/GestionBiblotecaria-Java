@@ -142,21 +142,29 @@ public class RegresarLibro extends JFrame {
 			String[] nombresLibrosOriginal = new String[libros.size()];
 			nombresLibrosOriginal = UtilJList.sacarNombreLibros(libros);
 
+			String nombreABuscar = nombreLibrosFiltrado[posicionList];
+
 			int ward = 0;
 			for (int i = 0; i < libros.size(); i++) {
-				if (nombresLibrosOriginal.equals(nombreLibrosFiltrado)) {
+				if (nombreABuscar.equals(nombresLibrosOriginal[i])) {
 					ward = i;
 				}
 			}
 
 			libros.get(ward).setPrestado(false);
+
 			try {
 				file.guardarDatosEjemplar(libros, new ArrayList<Tesis>());
+				if (libros.get(ward).esPrestado())
+					JOptionPane.showMessageDialog(null, "Se ha devuelto correctamen");
+				new PrincipalFrame();
+				dispose();
 			} catch (IOException e1) {
 				JOptionPane.showConfirmDialog(null, "No se ha podido guardar la informacion :( ", "ERROR",
 						JOptionPane.WARNING_MESSAGE);
 				e1.printStackTrace();
 			}
+
 		}
 
 	}
