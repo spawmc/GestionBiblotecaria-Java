@@ -12,9 +12,12 @@ Proyecto final Programación
 
 ## Usar a través de git
 
-    ```git clone https://github.com/spawmc/GestionBiblotecaria-Java.git```
+    git clone https://github.com/spawmc/GestionBiblotecaria-Java.git
 
-    podemos compilar por medio del scrip ```compilador.sh``` o usar directamente desde los archivos ya compilados haciendo uso de ```java GestionBibliotecaria```
+    podemos compilar por medio del scrip 
+    compilador.sh
+    o usar directamente desde los archivos ya compilados haciendo uso de 
+    java GestionBibliotecaria
 
 **¿Como compilar con el script?**
 
