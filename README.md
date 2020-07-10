@@ -10,7 +10,7 @@ Proyecto final Programación
 **Requisitos previos**
 - JDK 1.8 - OPEN JDK 1.8 o superior
 
-**Usar a través de git**
+## Usar a través de git
 
     ```git clone https://github.com/spawmc/GestionBiblotecaria-Java.git```
 
@@ -18,7 +18,10 @@ Proyecto final Programación
 
 **¿Como compilar con el script?**
 
-- Le daremos permisos de lectura, escritura y ejecución usando ```chmod +x compilador.sh``` o ```chmod +777 compilador.sh```
+- Le daremos permisos de lectura, escritura y ejecución usando
+   chmod +x compilador.sh
+    o
+   chmod +777 compilador.sh
 
 **¿Como ejecutar?**
 
