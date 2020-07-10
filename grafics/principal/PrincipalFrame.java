@@ -15,7 +15,10 @@ import files.ArchivoBinario;
 import grafics.principal.jframesUtilities.JFAddLibro;
 import grafics.principal.jframesUtilities.JFAddTesis;
 import grafics.principal.jframesUtilities.JFAddUser;
+import grafics.principal.jframesUtilities.devoluciones.RegresarLibro;
+import grafics.principal.jframesUtilities.devoluciones.RegresarTesis;
 import grafics.principal.jframesUtilities.prestamos.PrestarLibro;
+import grafics.principal.jframesUtilities.prestamos.PrestarTesis;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -426,6 +429,15 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Escuchaprestar t");
+			if(listaTesis.getSelectedIndex() != -1){
+				if(tesis.get(listaTesis.getSelectedIndex()).esPrestado()) {
+					JOptionPane.showMessageDialog(null, "La tesis ya ha sido prestada");
+				} else {
+					index = Mensajero.getInstance();
+					new PrestarTesis();
+					dispose();
+				}
+			}
 
 		}
 
@@ -467,6 +479,7 @@ public class PrincipalFrame extends JFrame {
 					System.out.println(listaLibros.getSelectedIndex());
 					index.setPosicion(listaLibros.getSelectedIndex());
 					new PrestarLibro();
+					dispose();
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "No ha seleccionado ningun libro");
@@ -531,7 +544,8 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Regresar libro");
-
+			new RegresarLibro();
+			dispose();
 		}
 
 	}
@@ -541,6 +555,8 @@ public class PrincipalFrame extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("Regresar tesis");
+			new RegresarTesis();
+			dispose();
 		}
 
 	}

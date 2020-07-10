@@ -38,7 +38,7 @@ public class Estudiante extends Usuario {
 	@Override
 	public void addLibroEnPosesion(Libro libro) {
 		if (numeroDeEjemplares <= 3)
-			super.addLibroEnPosesion(libro);
+			libros.add(libro);
 		else
 			System.out.println("No se pueden agregar más libros");
 	}

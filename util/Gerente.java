@@ -31,7 +31,6 @@ public class Gerente {
         } else {
             // System.out.println("Entrando al else");
             Date dateI = libros.get(index).prestar(new Date());
-            libros.get(index).setTiempoPrestado((Long)(dateI);
             estudiantes.get(indexE).addLibroEnPosesion(libros.get(index));
             estudiantes.get(indexE).getLibros().add(libros.get(index));
 

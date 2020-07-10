@@ -11,10 +11,10 @@ import javax.swing.JScrollPane;
 import ejemplares.Libro;
 import ejemplares.Tesis;
 import files.ArchivoBinario;
-import grafics.principal.PrincipalFrame;
 import usuarios.Estudiante;
 import usuarios.Profesor;
 import util.Gerente;
+import util.GestorDeEjemplares;
 import util.Mensajero;
 import util.UtilJList;
 
@@ -22,6 +22,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.awt.Color;
 
 import java.awt.event.*;
@@ -38,6 +39,8 @@ public class PrestarLibro extends JFrame {
 
 	private JList<String> jLEstudiantes = null;
 	private JList<String> jlProfesores = null;
+
+	private GestorDeEjemplares admin;
 
 	public PrestarLibro() {
 		super("Prestar libro");
@@ -192,7 +195,9 @@ public class PrestarLibro extends JFrame {
 		JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		p.setBackground(new Color(32, 64, 81));
 		p.setForeground(Color.WHITE);
-		p.add(new JLabel(this.getTitle()));
+		JLabel title = new JLabel(this.getTitle());
+		title.setForeground(Color.WHITE);
+		p.add(title);
 		return p;
 	}
 
@@ -228,14 +233,25 @@ public class PrestarLibro extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("prestar");
 			cargarLibros();
+			cargarEstudiantes();
 			System.out.println(jLEstudiantes.getSelectedIndex() + "posicion en la lista de estudiantes");
 			Mensajero index = Mensajero.getInstance();
 			System.out.println(index.getPosicion() + "posicion en la lista de libros");
+			int posicionLibro = index.getPosicion();
+			int posicionEstudiante = jLEstudiantes.getSelectedIndex();
 			if (!jLEstudiantes.isSelectionEmpty()) {
 				if (!(libros.get(index.getPosicion()).esPrestado())) {
-					Gerente gen = new Gerente();
-					gen.agregarLibroAEstudiante(index.getPosicion(), jLEstudiantes.getSelectedIndex());
-					JOptionPane.showConfirmDialog(null, "Se a guardado la información del prestamo");
+					libros.get(posicionLibro).prestar(new Date());
+
+					try {
+						file.guardarDatosEjemplar(libros, new ArrayList<Tesis>());
+					} catch (IOException e1) {
+						JOptionPane.showConfirmDialog(null, "No se ha podido guardar la informacion :( ", "ERROR",
+								JOptionPane.WARNING_MESSAGE);
+						e1.printStackTrace();
+					}
+
+					JOptionPane.showMessageDialog(null, "Se a guardado la información del prestamo");
 					dispose();
 
 				} else {
@@ -255,17 +271,30 @@ public class PrestarLibro extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("prestar");
 			cargarLibros();
+			cargarProfesores();
 			Mensajero index = Mensajero.getInstance();
+			int posicionLibro = index.getPosicion();
 			System.out.println(index.getPosicion());
+			if (!jlProfesores.isSelectionEmpty()) {
+				if (!(libros.get(index.getPosicion()).esPrestado())) {
+					libros.get(posicionLibro).prestar(new Date());
 
-			if (!(libros.get(index.getPosicion()).esPrestado())) {
-				Gerente gen = new Gerente();
-				gen.agregarLibroAProfesor(index.getPosicion(), jlProfesores.getSelectedIndex());
-				JOptionPane.showConfirmDialog(null, "Se a guardado la información del prestamo");
-				dispose();
+					try {
+						file.guardarDatosEjemplar(libros, new ArrayList<Tesis>());
+					} catch (IOException e1) {
+						JOptionPane.showConfirmDialog(null, "No se ha podido guardar la informacion :( ", "ERROR",
+								JOptionPane.WARNING_MESSAGE);
+						e1.printStackTrace();
+					}
 
+					JOptionPane.showMessageDialog(null, "Se a guardado la información del prestamo");
+					dispose();
+
+				} else {
+					JOptionPane.showMessageDialog(null, "El libro ya ha sido prestado");
+				}
 			} else {
-				JOptionPane.showMessageDialog(null, "El libro ya ha sido prestado");
+				JOptionPane.showMessageDialog(null, "Seleccione un estudiante");
 			}
 
 		}
@@ -289,14 +318,10 @@ public class PrestarLibro extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!jlProfesores.isSelectionEmpty()) {
-				jLEstudiantes.clearSelection();
+				jlProfesores.clearSelection();
 			}
 		}
 
-	}
-
-	public static void main(String[] args) {
-		new PrestarLibro();
 	}
 
 }
